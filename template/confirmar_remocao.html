@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remover {{ item.titulo }}</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+
+  <main class="conteudo conteudo-estreito">
+
+    <form method="post" class="card confirmacao">
+      {% csrf_token %}
+
+      <h1>Você tem certeza que deseja remover {{ tipo }} “{{ item.titulo }}”?</h1>
+
+      <div class="confirmacao-botoes">
+        <input type="submit" name="confirmar" value="Sim" class="botao botao-perigo">
+        <input type="submit" value="Não" class="botao botao-secundario">
+      </div>
+    </form>
+
+  </main>
+
+</body>
+
+</html>

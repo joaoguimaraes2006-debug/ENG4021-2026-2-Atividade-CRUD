@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ acao }} filme</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+
+  <main class="conteudo conteudo-estreito">
+
+    <a href="{% url 'home' %}" class="voltar">‹ Voltar</a>
+    <h1>{{ acao }} filme</h1>
+
+    <form method="post" class="card formulario">
+      {% csrf_token %}
+
+      <div>
+        <label for="titulo">Título:</label>
+        <input id="titulo" name="titulo" value="{{ filme.titulo }}" required>
+      </div>
+
+      <div>
+        <label for="diretor">Diretor:</label>
+        <input id="diretor" name="diretor" value="{{ filme.diretor }}" required>
+      </div>
+
+      <div>
+        <label for="genero">Gênero:</label>
+        <select id="genero" name="genero" required>
+          {% for valor, nome in generos %}
+            <option value="{{ valor }}" {% if filme.genero == valor %}selected{% endif %}>{{ nome }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div>
+        <label for="data_lancamento">Data de lançamento:</label>
+        <input type="date" id="data_lancamento" name="data_lancamento" value="{{ filme.data_lancamento|date:'Y-m-d' }}" required>
+      </div>
+
+      <input type="submit" value="Registrar" class="botao">
+    </form>
+
+  </main>
+
+</body>
+
+</html>

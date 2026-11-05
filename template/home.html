@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Estante</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+
+  <header class="cabecalho">
+    <h1>🎬 Minha Estante</h1>
+    <p>Filmes e séries que eu gosto</p>
+  </header>
+
+  <main class="conteudo">
+
+    <section class="secao">
+      <div class="secao-topo">
+        <h2>Filmes</h2>
+        <a href="{% url 'create_filme' %}" class="botao">+ Adicionar novo filme</a>
+      </div>
+
+      <ul class="lista">
+        {% for filme in filmes %}
+          <li>
+            <div class="item-info">
+              <strong>{{ filme.titulo }}</strong>
+              <span>{{ filme.diretor }} · {{ filme.genero }} · {{ filme.data_lancamento|date:"d/m/Y" }}</span>
+            </div>
+            <div class="item-acoes">
+              <a href="{% url 'update_filme' filme.id %}" class="link-atualizar">Atualizar</a>
+              <a href="{% url 'delete_filme' filme.id %}" class="link-remover">Remover</a>
+            </div>
+          </li>
+        {% empty %}
+          <li class="vazio">Nenhum filme cadastrado ainda.</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="secao">
+      <div class="secao-topo">
+        <h2>Séries</h2>
+        <a href="{% url 'create_serie' %}" class="botao">+ Adicionar nova série</a>
+      </div>
+
+      <ol class="lista">
+        {% for serie in series %}
+          <li>
+            <div class="item-info">
+              <strong>{{ serie.titulo }}</strong>
+              <span>{{ serie.plataforma }} · {{ serie.temporadas }} temporada{{ serie.temporadas|pluralize }} · estreia em {{ serie.data_estreia|date:"d/m/Y" }}</span>
+            </div>
+            <div class="item-acoes">
+              <a href="{% url 'update_serie' serie.id %}" class="link-atualizar">Atualizar</a>
+              <a href="{% url 'delete_serie' serie.id %}" class="link-remover">Remover</a>
+            </div>
+          </li>
+        {% empty %}
+          <li class="vazio">Nenhuma série cadastrada ainda.</li>
+        {% endfor %}
+      </ol>
+    </section>
+
+  </main>
+
+</body>
+
+</html>

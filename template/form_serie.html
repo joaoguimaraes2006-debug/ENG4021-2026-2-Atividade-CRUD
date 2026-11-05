@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ acao }} série</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+
+  <main class="conteudo conteudo-estreito">
+
+    <a href="{% url 'home' %}" class="voltar">‹ Voltar</a>
+    <h1>{{ acao }} série</h1>
+
+    <form method="post" class="card formulario">
+      {% csrf_token %}
+
+      <div>
+        <label for="titulo">Título:</label>
+        <input id="titulo" name="titulo" value="{{ serie.titulo }}" required>
+      </div>
+
+      <div>
+        <label for="plataforma">Plataforma:</label>
+        <select id="plataforma" name="plataforma" required>
+          {% for valor, nome in plataformas %}
+            <option value="{{ valor }}" {% if serie.plataforma == valor %}selected{% endif %}>{{ nome }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div>
+        <label for="temporadas">Temporadas:</label>
+        <input type="number" id="temporadas" name="temporadas" min="1" value="{{ serie.temporadas }}" required>
+      </div>
+
+      <div>
+        <label for="data_estreia">Data de estreia:</label>
+        <input type="date" id="data_estreia" name="data_estreia" value="{{ serie.data_estreia|date:'Y-m-d' }}" required>
+      </div>
+
+      <input type="submit" value="Registrar" class="botao">
+    </form>
+
+  </main>
+
+</body>
+
+</html>
